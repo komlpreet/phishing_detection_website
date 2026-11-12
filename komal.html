@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Phishing Detection Website</h1>
+
+        <form method="POST" class="scan-form">
+            <input type="text" name="url" placeholder="Enter URL" value="{{ url or '' }}" required>
+            <button type="submit">Scan</button>
+        </form>
+
+        {% if result %}
+        <div class="result-box">
+            <h2>{{ result }}</h2>
+
+            <p><strong>Risk Score:</strong> {{ score }}</p>
+
+            <!-- Progress Bar -->
+            <div class="progress">
+    <div class="progress-bar {{ bar_color }}" style="--score-width: {{ score }}%;">
+    {{ score }}%
+    </div>
+        </div>
+
+            <p><strong>Domain:</strong> {{ domain }}</p>
+
+            {% if reasons %}
+            <h3>Reasons:</h3>
+            <ul>
+                {% for reason in reasons %}
+                <li>{{ reason }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
